@@ -115,12 +115,17 @@ def main(page: ft.Page):
         page.update()
 
     #кнопка для преобразования
-    btn_convert = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_FILL_OUTLINED, on_click=click_convert, data=0, icon_size=50)
+    btn_convert = ft.IconButton(icon=ft.icons.PLAY_CIRCLE_FILL_OUTLINED, on_click=click_convert, data=0, icon_size=40)
+    # кнопка для добавления суффикса
+    btn = ft.IconButton(icon=ft.icons.ADD_COMMENT, on_click=click_convert, data=0, icon_size=40,
+                        style=ft.ButtonStyle(color={ft.MaterialState.FOCUSED: "green"}, ))
+    btn_column = ft.Column(controls=[btn, btn_convert])
+    # кнопка для отправки
     btn_transfer = ft.ElevatedButton(text="Отправить")
 
     # Добавление всех элементов на страницу
     element_one = ft.Row([bord_left, cont_1, bord_left, cont_2, ],)
-    element_two = ft.Row([bord_left, input_block, bord_ctr, btn_convert,
+    element_two = ft.Row([bord_left, input_block, bord_ctr, btn_column,
                           bord_ctr, output_block,bord_ctr, btn_transfer])
     page.add(appTitle, bord_top, element_one, bord_top, element_two)
 
