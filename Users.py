@@ -5,11 +5,13 @@ from data.DATA import Data
 class Users(Data):
     """Подкласс для заполнения шаблона User"""
     def __init__(self):
-        Data.__init__(self)
+        super().__init__()
         self.password = 123456
         self.pattern = ["[\w\.-]+@[\w\.-]+", "[а-яёА-ЯЁ]+"]
         self.reader = []
+        self.org_name = None
         self.users = []
+        self.roles = []
 
     def get_roles(self) -> list:
         """вытаскиваем из json список roles"""
@@ -26,7 +28,7 @@ class Users(Data):
     def get_tenant_id(self) -> dict:
         """вытаскиваем из json шаблон tenant"""
         info = self.decoding()
-        tenant_ids = info['tenant_ids']
+        tenant_ids = info["tenant_ids"][self.org_name]
         return tenant_ids
 
     def mapping(self) -> list:
@@ -38,10 +40,9 @@ class Users(Data):
             list_users.append(model)
         return list_users
 
-    def get_model(self, data: list)-> dict:
+    def get_model(self, data: list) -> dict:
         """собираем model для создания списка"""
         model = self.get_user_pattern()
-        roles = self.get_roles()
         tenant_ids = self.get_tenant_id()
         mail = re.findall(self.pattern[0], data)
         fio = re.findall(self.pattern[1], data)
@@ -49,14 +50,19 @@ class Users(Data):
         model['fname'] = fio[1]
         model['lname'] = fio[0]
         model['password'] = self.password
-        model['roles'] = roles[0]
-        model['tenant_ids'] = tenant_ids["OBLAKO Group"]
+        model['roles'] = self.roles
+        model['tenant_ids'] = tenant_ids
         return model
 
-    def change(self):
-        print("Вставьте пользователей:\n")
-        self.reader = '\n'.join(iter(input, '')).split('\n')
-        return self.reader
+    # def change_old(self):
+    #     """переделать под интерфейс!!!"""
+    #     print("Вставьте пользователей:\n")
+    #     self.reader = '\n'.join(iter(input, '')).split('\n')
+    #     return self.reader
+    #
+    # def change(self, data):
+    #     self.reader = '\n'.join(data).split('\n')
+    #     print(self.reader)
 
     def edit_user(self):
         pass

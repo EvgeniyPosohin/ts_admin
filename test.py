@@ -1,12 +1,24 @@
-class PaddingContainer:
-    """создание блока для зонирования элементов"""
-    def __init__(self, **kwargs):
+import flet as ft
 
-        self.padding = kwargs,
-        self.ins = kwargs
+class Data:
+    def __init__(self) -> None:
+        self.counter = 0
 
-    def __repr__(self):
-        return f'{self.padding}, {self.ins}'
+d = Data()
 
-c = PaddingContainer(padding=10, ins=2)
-print(c)
+def main(page):
+
+    page.snack_bar = ft.SnackBar(
+        content=ft.Text("Hello, world!"),
+        action="___",
+    )
+
+    def on_click(e):
+        page.snack_bar = ft.SnackBar(ft.Text(f"Hello {d.counter}"))
+        page.snack_bar.open = True
+        d.counter += 1
+        page.update()
+
+    page.add(ft.ElevatedButton("Open SnackBar", on_click=on_click))
+
+ft.app(target=main)
