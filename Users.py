@@ -52,17 +52,7 @@ class Users(Data):
         model['password'] = self.password
         model['roles'] = self.roles
         model['tenant_ids'] = tenant_ids
-        return model
-
-    # def change_old(self):
-    #     """переделать под интерфейс!!!"""
-    #     print("Вставьте пользователей:\n")
-    #     self.reader = '\n'.join(iter(input, '')).split('\n')
-    #     return self.reader
-    #
-    # def change(self, data):
-    #     self.reader = '\n'.join(data).split('\n')
-    #     print(self.reader)
+        return model 
 
     def edit_user(self):
         pass
